@@ -41,7 +41,7 @@ jobs:
       packages: write
     steps:
       - name: Set up GitHub actor in lowercase
-        run: echo "DOCKER_USERNAME=$(echo $GITHUB_ACTOR | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+        run: echo "docker_username=$(echo $GITHUB_ACTOR | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       - name: Download code
         uses: actions/download-artifact@v4
         with:
