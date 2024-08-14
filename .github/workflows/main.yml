@@ -49,9 +49,28 @@ jobs:
           path: .
       - name: build docker
         run: bash ci/build-docker.sh
-      - name: Set Github actor to capital start
-        run: capitalized_username=$(echo "${GITHUB_ACTOR:0:1}" | tr '[:lower:]' '[:upper:]')$(echo "${GITHUB_ACTOR:1}" | tr '[:upper:]' '[:lower:]') echo "docker_username=$capitalized_username" >> $GITHUB_ENV
       - name: push docker
         run: bash ci/push-docker.sh
-
+  Component-test:
+    runs-on: ubuntu-latest
+    needs: [Docker-image]
+    steps: 
+      - name: Download code
+        uses: actions/download-artifact@v4
+        with:
+          name: code
+          path: .
+      - name: Execute component test
+        run: bash ci/component-test.sh
+  Performance-test:
+    runs-on: ubuntu-latest
+    needs: [Docker-image]
+    steps:
+      - name: Download code
+        uses: actions/download-artifact@v4
+        with:
+          name: code
+          path: .
+      - name: Execute performance test
+        run: bash ci/performance-test.sh
     
